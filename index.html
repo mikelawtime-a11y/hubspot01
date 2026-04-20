@@ -12,7 +12,7 @@
   <p class="sub">A simple demo showing Contacts, Companies, and Deals using the HubSpot CRM API v3.</p>
 
   <div class="warning">
-    ⚠️ <strong>Never share your Access Token publicly. OKa</strong>
+    ⚠️ <strong>Never share your Access Token publicly. OKb</strong>
     Your token is only stored in your browser's memory for this session — it is never sent anywhere except HubSpot.
     <br><br>
     ⚠️ <strong>CORS note:</strong> HubSpot blocks direct browser API calls. Use the
@@ -91,6 +91,10 @@
     <select id="d-stage">
       <option disabled selected>Save token first to load stages</option>
     </select>
+    <div>
+      <button onclick="loadDealStages()">Reload Stages</button>
+      <span id="stage-status" style="font-size:13px;"></span>
+    </div>
     <button class="secondary" onclick="createDeal()">Create Deal</button>
     <div class="result" id="result-create-deal">Results will appear here...</div>
   </div>

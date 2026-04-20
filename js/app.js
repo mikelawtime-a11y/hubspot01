@@ -9,11 +9,16 @@ function show(id, result) {
 // ── Load real deal stages from this HubSpot account ────────────────────────
 async function loadDealStages() {
   const select = document.getElementById('d-stage');
+  const status = document.getElementById('stage-status');
   select.innerHTML = '<option disabled selected>Loading stages...</option>';
+  status.textContent = '';
 
   const res = await hubspotRaw('crm/v3/pipelines/deals');
   if (!res || !res.ok) {
     select.innerHTML = '<option disabled selected>Failed to load stages</option>';
+    const msg = res?.data?.message || JSON.stringify(res?.data) || 'Unknown error';
+    status.textContent = 'Error: ' + msg;
+    status.style.color = '#c0392b';
     return;
   }
 
@@ -31,6 +36,9 @@ async function loadDealStages() {
       });
     select.appendChild(group);
   });
+
+  status.textContent = '✓ Stages loaded';
+  status.style.color = '#27ae60';
 }
 
 
@@ -63,11 +71,16 @@ async function createCompany() {
 
 // ── CREATE Deal ─────────────────────────────────────────────────────────────
 async function createDeal() {
+  const stageEl = document.getElementById('d-stage');
+  if (!stageEl.value || stageEl.selectedOptions[0]?.disabled) {
+    show('result-create-deal', { ok: false, data: { message: 'Please load deal stages first — save your token, then click Reload Stages.' } });
+    return;
+  }
   show('result-create-deal', await hubspot('POST', 'deals', {
     properties: {
       dealname:  document.getElementById('d-name').value,
       amount:    document.getElementById('d-amount').value,
-      dealstage: document.getElementById('d-stage').value,
+      dealstage: stageEl.value,
     },
   }));
 }
