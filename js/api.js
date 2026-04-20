@@ -1,6 +1,7 @@
 // ── Config ─────────────────────────────────────────────────────────────────
-const PROXY = 'https://corsproxy.io/?';
-const BASE  = 'https://api.hubapi.com/crm/v3/objects/';
+const PROXY    = 'https://corsproxy.io/?';
+const BASE     = 'https://api.hubapi.com/crm/v3/objects/';
+const BASE_RAW = 'https://api.hubapi.com/';
 
 let ACCESS_TOKEN = '';
 
@@ -33,6 +34,21 @@ async function hubspot(method, path, body) {
     const res  = await fetch(url, opts);
     const data = await res.json();
     return { ok: res.ok, status: res.status, data };
+  } catch (err) {
+    return { ok: false, data: { message: err.message } };
+  }
+}
+
+// ── Generic helper for non-objects endpoints (e.g. pipelines) ───────────────
+async function hubspotRaw(path) {
+  if (!ACCESS_TOKEN) return null;
+  const url = PROXY + encodeURIComponent(BASE_RAW + path);
+  try {
+    const res  = await fetch(url, {
+      headers: { 'Authorization': 'Bearer ' + ACCESS_TOKEN },
+    });
+    const data = await res.json();
+    return { ok: res.ok, data };
   } catch (err) {
     return { ok: false, data: { message: err.message } };
   }

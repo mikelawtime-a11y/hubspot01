@@ -6,6 +6,34 @@ function show(id, result) {
   el.textContent = JSON.stringify(result.data, null, 2);
 }
 
+// ── Load real deal stages from this HubSpot account ────────────────────────
+async function loadDealStages() {
+  const select = document.getElementById('d-stage');
+  select.innerHTML = '<option disabled selected>Loading stages...</option>';
+
+  const res = await hubspotRaw('crm/v3/pipelines/deals');
+  if (!res || !res.ok) {
+    select.innerHTML = '<option disabled selected>Failed to load stages</option>';
+    return;
+  }
+
+  select.innerHTML = '';
+  res.data.results.forEach(pipeline => {
+    const group = document.createElement('optgroup');
+    group.label = pipeline.label;
+    pipeline.stages
+      .sort((a, b) => a.displayOrder - b.displayOrder)
+      .forEach(stage => {
+        const opt = document.createElement('option');
+        opt.value = stage.id;
+        opt.textContent = stage.label;
+        group.appendChild(opt);
+      });
+    select.appendChild(group);
+  });
+}
+
+
 // ── READ ────────────────────────────────────────────────────────────────────
 async function getObjects(type) {
   const props = 'firstname,lastname,email,name,domain,dealname,amount,dealstage';

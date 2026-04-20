@@ -25,7 +25,7 @@
     <h2>🔑 Step 1 — Enter your Private App Access Token</h2>
     <label for="token">Access Token (stays in browser memory only)</label>
     <input type="password" id="token" placeholder="pat-na2-xxxxxxxxxxxx" />
-    <button onclick="saveToken()">Save Token</button>
+    <button onclick="saveToken(); loadDealStages()">Save Token</button>
     <span id="tokenStatus" style="font-size:13px; color: #27ae60;"></span>
   </div>
 
@@ -89,13 +89,7 @@
     <input type="number" id="d-amount" placeholder="5000" />
     <label>Deal Stage</label>
     <select id="d-stage">
-      <option value="appointmentscheduled">Appointment Scheduled</option>
-      <option value="qualifiedtobuy">Qualified to Buy</option>
-      <option value="presentationscheduled">Presentation Scheduled</option>
-      <option value="decisionmakerboughtin">Decision Maker Bought-In</option>
-      <option value="contractsent">Contract Sent</option>
-      <option value="closedwon">Closed Won</option>
-      <option value="closedlost">Closed Lost</option>
+      <option disabled selected>Save token first to load stages</option>
     </select>
     <button class="secondary" onclick="createDeal()">Create Deal</button>
     <div class="result" id="result-create-deal">Results will appear here...</div>
