@@ -1,0 +1,41 @@
+/* ── Tree nodes ────────────────────────────────────────────────────────────── */
+.tree { padding: 4px 0; }
+
+.tree-node {
+  padding: 7px 12px;
+  border-radius: 6px;
+  margin: 3px 0;
+  font-size: 14px;
+  border-left: 4px solid transparent;
+}
+.company-node { background: #eaf4fb; border-left-color: #0091ae; font-weight: 600; }
+.contact-node { background: #f0fff4; border-left-color: #27ae60; }
+.deal-node    { background: #fff8f0; border-left-color: #ff7a59; }
+.empty-node   { color: #bbb; font-style: italic; font-size: 13px; }
+
+.level-1 { margin-left: 32px; }
+.level-2 { margin-left: 64px; }
+.unlinked { opacity: 0.65; border-style: dashed; }
+
+/* ── Section headers inside tree ───────────────────────────────────────────── */
+.tree-section {
+  margin-top: 18px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* ── Link forms ────────────────────────────────────────────────────────────── */
+.link-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.link-row select { width: auto; flex: 1; min-width: 140px; margin-bottom: 0; }
+.link-row button { margin: 0; white-space: nowrap; }
+.link-label { font-size: 13px; color: #666; white-space: nowrap; }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HubSpot Relationships</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/associations.css" />
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">API Demo</a>
+    <a href="crud.html">CRUD Demo</a>
+    <a href="associations.html" class="active">Relationships</a>
+  </nav>
+
+  <h1>Relationships View</h1>
+  <p class="sub">See how Companies, Contacts and Deals connect — and create new links.</p>
+
+  <!-- TOKEN -->
+  <div class="card">
+    <h2>🔑 Enter your Private App Access Token</h2>
+    <label for="token">Access Token (stays in browser memory only)</label>
+    <input type="password" id="token" placeholder="pat-na2-xxxxxxxxxxxx" />
+    <button onclick="initAssoc()">Load Relationships</button>
+    <span id="tokenStatus" style="font-size:13px; margin-left:8px;"></span>
+  </div>
+
+  <!-- TREE VIEW -->
+  <div class="card">
+    <h2>🗂 Relationship Tree</h2>
+    <p class="sub" style="margin-bottom:12px;">
+      Companies are at the top. Contacts and Deals nested under their company.
+      Dashed items have no associations yet.
+    </p>
+    <div id="tree-view" class="tree muted">Save token above to load relationships.</div>
+  </div>
+
+  <!-- CREATE ASSOCIATIONS -->
+  <div class="card">
+    <h2>🔗 Create Associations</h2>
+    <p class="sub" style="margin-bottom:16px;">Link existing records to each other.</p>
+
+    <!-- Contact → Company -->
+    <h3 style="font-size:14px; margin-bottom:8px;">👤 Link Contact to 🏢 Company</h3>
+    <div class="link-row">
+      <span class="link-label">Contact</span>
+      <select id="lnk-contact"><option disabled selected>Load data first</option></select>
+      <span class="link-label">→ Company</span>
+      <select id="lnk-company1"><option disabled selected>Load data first</option></select>
+      <button class="secondary" onclick="linkContactToCompany()">Link</button>
+    </div>
+    <div class="result" id="link-result-1"></div>
+
+    <hr class="divider" />
+
+    <!-- Deal → Contact -->
+    <h3 style="font-size:14px; margin-bottom:8px;">💰 Link Deal to 👤 Contact</h3>
+    <div class="link-row">
+      <span class="link-label">Deal</span>
+      <select id="lnk-deal1"><option disabled selected>Load data first</option></select>
+      <span class="link-label">→ Contact</span>
+      <select id="lnk-contact2"><option disabled selected>Load data first</option></select>
+      <button class="secondary" onclick="linkDealToContact()">Link</button>
+    </div>
+    <div class="result" id="link-result-2"></div>
+
+    <hr class="divider" />
+
+    <!-- Deal → Company -->
+    <h3 style="font-size:14px; margin-bottom:8px;">💰 Link Deal to 🏢 Company</h3>
+    <div class="link-row">
+      <span class="link-label">Deal</span>
+      <select id="lnk-deal2"><option disabled selected>Load data first</option></select>
+      <span class="link-label">→ Company</span>
+      <select id="lnk-company2"><option disabled selected>Load data first</option></select>
+      <button class="secondary" onclick="linkDealToCompany()">Link</button>
+    </div>
+    <div class="result" id="link-result-3"></div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/associations.js"></script>
+
+</body>
+</html>
