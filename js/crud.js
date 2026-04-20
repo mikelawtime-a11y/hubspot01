@@ -15,8 +15,6 @@ async function init() {
     console.error('No ACCESS_TOKEN set in js/api.js');
     return;
   }
-  statusEl.textContent = '✓ Saved';
-  statusEl.style.color = '#27ae60';
 
   await loadStages();
   loadList('contacts');

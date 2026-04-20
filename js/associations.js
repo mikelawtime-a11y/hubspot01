@@ -26,17 +26,12 @@ async function initAssoc() {
     console.error('No ACCESS_TOKEN set in js/api.js');
     return;
   }
-  statusEl.textContent = '⏳ Loading...';
-  statusEl.style.color = '#888';
 
   await Promise.all([ loadAllRecords(), loadStageMap() ]);
   await loadAllAssociations();
 
   renderTree();
   populateLinkDropdowns();
-
-  statusEl.textContent = '✓ Loaded';
-  statusEl.style.color = '#27ae60';
 }
 
 // ── Load all records (contacts, companies, deals) ────────────────────────────
