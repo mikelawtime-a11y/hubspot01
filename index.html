@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HubSpot API Demo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; background: #f4f6f8; color: #333; padding: 20px; }
+    h1 { color: #ff7a59; margin-bottom: 6px; }
+    p.sub { color: #666; margin-bottom: 20px; font-size: 14px; }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    h2 { font-size: 16px; margin-bottom: 12px; color: #444; }
+
+    input, select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    button {
+      background: #ff7a59;
+      color: white;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    button:hover { background: #e8613e; }
+    button.secondary {
+      background: #0091ae;
+    }
+    button.secondary:hover { background: #007a94; }
+
+    .result {
+      margin-top: 14px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 13px;
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .error { color: #c0392b; }
+    .success { color: #27ae60; }
+
+    .warning {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      color: #856404;
+    }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+    label { font-size: 13px; color: #555; display: block; margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+
+  <h1>HubSpot API Demo</h1>
+  <p class="sub">A simple demo showing Contacts, Companies, and Deals using the HubSpot CRM API v3.</p>
+
+  <div class="warning">
+    ⚠️ <strong>Never share your Access Token publicly.</strong>
+    Your token is only stored in your browser's memory for this session — it is never sent anywhere except HubSpot.
+    <br><br>
+    ⚠️ <strong>CORS note:</strong> HubSpot blocks direct browser API calls. Use the
+    <a href="https://developers.hubspot.com/docs/api/overview" target="_blank">HubSpot API Explorer</a>
+    or a backend proxy for real apps. This demo uses a public CORS proxy for demonstration only.
+  </div>
+
+  <!-- TOKEN -->
+  <div class="card">
+    <h2>🔑 Step 1 — Enter your Private App Access Token</h2>
+    <label for="token">Access Token (stays in browser memory only)</label>
+    <input type="password" id="token" placeholder="pat-na2-xxxxxxxxxxxx" />
+    <button onclick="saveToken()">Save Token</button>
+    <span id="tokenStatus" style="font-size:13px; color: #27ae60;"></span>
+  </div>
+
+  <!-- GET CONTACTS -->
+  <div class="card">
+    <h2>👤 Contacts — Read</h2>
+    <button onclick="getObjects('contacts')">Get Contacts</button>
+    <div class="result" id="result-contacts">Results will appear here...</div>
+  </div>
+
+  <!-- CREATE CONTACT -->
+  <div class="card">
+    <h2>👤 Contacts — Create</h2>
+    <div class="grid">
+      <div>
+        <label>First Name</label>
+        <input type="text" id="c-firstname" placeholder="John" />
+      </div>
+      <div>
+        <label>Last Name</label>
+        <input type="text" id="c-lastname" placeholder="Doe" />
+      </div>
+    </div>
+    <label>Email</label>
+    <input type="email" id="c-email" placeholder="john@example.com" />
+    <button class="secondary" onclick="createContact()">Create Contact</button>
+    <div class="result" id="result-create-contact">Results will appear here...</div>
+  </div>
+
+  <!-- GET COMPANIES -->
+  <div class="card">
+    <h2>🏢 Companies — Read</h2>
+    <button onclick="getObjects('companies')">Get Companies</button>
+    <div class="result" id="result-companies">Results will appear here...</div>
+  </div>
+
+  <!-- CREATE COMPANY -->
+  <div class="card">
+    <h2>🏢 Companies — Create</h2>
+    <label>Company Name</label>
+    <input type="text" id="co-name" placeholder="Acme Corp" />
+    <label>Domain</label>
+    <input type="text" id="co-domain" placeholder="acme.com" />
+    <button class="secondary" onclick="createCompany()">Create Company</button>
+    <div class="result" id="result-create-company">Results will appear here...</div>
+  </div>
+
+  <!-- GET DEALS -->
+  <div class="card">
+    <h2>💰 Deals — Read</h2>
+    <button onclick="getObjects('deals')">Get Deals</button>
+    <div class="result" id="result-deals">Results will appear here...</div>
+  </div>
+
+  <!-- CREATE DEAL -->
+  <div class="card">
+    <h2>💰 Deals — Create</h2>
+    <label>Deal Name</label>
+    <input type="text" id="d-name" placeholder="Acme Contract" />
+    <label>Amount ($)</label>
+    <input type="number" id="d-amount" placeholder="5000" />
+    <label>Deal Stage</label>
+    <select id="d-stage">
+      <option value="appointmentscheduled">Appointment Scheduled</option>
+      <option value="qualifiedtobuy">Qualified to Buy</option>
+      <option value="presentationscheduled">Presentation Scheduled</option>
+      <option value="decisionmakerboughtin">Decision Maker Bought-In</option>
+      <option value="contractsent">Contract Sent</option>
+      <option value="closedwon">Closed Won</option>
+      <option value="closedlost">Closed Lost</option>
+    </select>
+    <button class="secondary" onclick="createDeal()">Create Deal</button>
+    <div class="result" id="result-create-deal">Results will appear here...</div>
+  </div>
+
+  <script>
+    // ── Token ──────────────────────────────────────────────────────────────
+    let ACCESS_TOKEN = '';
+
+    function saveToken() {
+      ACCESS_TOKEN = document.getElementById('token').value.trim();
+      document.getElementById('tokenStatus').textContent = ACCESS_TOKEN
+        ? '✓ Token saved for this session'
+        : '';
+    }
+
+    // ── CORS Proxy (demo only — do NOT use in production) ──────────────────
+    // HubSpot blocks direct browser requests. A real app would use a backend.
+    const PROXY = 'https://corsproxy.io/?';
+    const BASE  = 'https://api.hubapi.com/crm/v3/objects/';
+
+    // ── Helper: call HubSpot API ───────────────────────────────────────────
+    async function hubspot(method, path, body) {
+      if (!ACCESS_TOKEN) {
+        alert('Please enter your Access Token first.');
+        return null;
+      }
+      const url = PROXY + encodeURIComponent(BASE + path);
+      const opts = {
+        method,
+        headers: {
+          'Authorization': 'Bearer ' + ACCESS_TOKEN,
+          'Content-Type': 'application/json'
+        }
+      };
+      if (body) opts.body = JSON.stringify(body);
+
+      try {
+        const res  = await fetch(url, opts);
+        const data = await res.json();
+        return { ok: res.ok, status: res.status, data };
+      } catch (err) {
+        return { ok: false, data: { message: err.message } };
+      }
+    }
+
+    // ── Display result ─────────────────────────────────────────────────────
+    function show(id, result) {
+      const el = document.getElementById(id);
+      if (!result) return;
+      el.className = 'result ' + (result.ok ? 'success' : 'error');
+      el.textContent = JSON.stringify(result.data, null, 2);
+    }
+
+    // ── GET objects ────────────────────────────────────────────────────────
+    async function getObjects(type) {
+      const result = await hubspot('GET', `${type}?limit=5&properties=firstname,lastname,email,name,domain,dealname,amount,dealstage`);
+      show(`result-${type}`, result);
+    }
+
+    // ── CREATE Contact ─────────────────────────────────────────────────────
+    async function createContact() {
+      const body = {
+        properties: {
+          firstname: document.getElementById('c-firstname').value,
+          lastname:  document.getElementById('c-lastname').value,
+          email:     document.getElementById('c-email').value
+        }
+      };
+      const result = await hubspot('POST', 'contacts', body);
+      show('result-create-contact', result);
+    }
+
+    // ── CREATE Company ─────────────────────────────────────────────────────
+    async function createCompany() {
+      const body = {
+        properties: {
+          name:   document.getElementById('co-name').value,
+          domain: document.getElementById('co-domain').value
+        }
+      };
+      const result = await hubspot('POST', 'companies', body);
+      show('result-create-company', result);
+    }
+
+    // ── CREATE Deal ────────────────────────────────────────────────────────
+    async function createDeal() {
+      const body = {
+        properties: {
+          dealname:  document.getElementById('d-name').value,
+          amount:    document.getElementById('d-amount').value,
+          dealstage: document.getElementById('d-stage').value
+        }
+      };
+      const result = await hubspot('POST', 'deals', body);
+      show('result-create-deal', result);
+    }
+  </script>
+
+</body>
+</html>
