@@ -32,7 +32,8 @@ async function hubspot(method, path, body) {
 
   try {
     const res  = await fetch(url, opts);
-    const data = await res.json();
+    const text = await res.text();
+    const data = text ? JSON.parse(text) : {};
     return { ok: res.ok, status: res.status, data };
   } catch (err) {
     return { ok: false, data: { message: err.message } };
@@ -47,7 +48,8 @@ async function hubspotRaw(path) {
     const res  = await fetch(url, {
       headers: { 'Authorization': 'Bearer ' + ACCESS_TOKEN },
     });
-    const data = await res.json();
+    const text = await res.text();
+    const data = text ? JSON.parse(text) : {};
     return { ok: res.ok, data };
   } catch (err) {
     return { ok: false, data: { message: err.message } };

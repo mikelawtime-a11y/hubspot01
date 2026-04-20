@@ -1,0 +1,23 @@
+/* ── Table ─────────────────────────────────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+th { background: #f0f2f5; text-align: left; padding: 8px 10px; border-bottom: 2px solid #ddd; color: #555; font-weight: 600; }
+td { padding: 8px 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fafbfc; }
+.id-cell { color: #bbb; font-size: 11px; font-family: monospace; }
+.actions  { white-space: nowrap; }
+
+/* ── Action buttons ────────────────────────────────────────────────────────── */
+.btn-view   { background: #95a5a6; color: white; text-decoration: none; padding: 4px 9px; border-radius: 4px; font-size: 12px; margin-right: 4px; display: inline-block; }
+.btn-view:hover   { background: #7f8c8d; }
+.btn-edit   { background: #0091ae; color: white; border: none; padding: 4px 9px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-right: 4px; }
+.btn-edit:hover   { background: #007a94; }
+.btn-delete { background: #e74c3c; color: white; border: none; padding: 4px 9px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+.btn-delete:hover { background: #c0392b; }
+
+/* ── Form extras ───────────────────────────────────────────────────────────── */
+h3   { font-size: 14px; color: #555; margin-bottom: 12px; }
+.cancel { background: #95a5a6; }
+.cancel:hover { background: #7f8c8d; }
+hr.divider { border: none; border-top: 1px solid #eee; margin: 18px 0; }
+.muted { color: #999; font-size: 13px; padding: 8px 0; }

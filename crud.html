@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HubSpot CRUD Demo</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/crud.css" />
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">API Demo</a>
+    <a href="crud.html" class="active">CRUD Demo</a>
+  </nav>
+
+  <h1>HubSpot CRUD Demo</h1>
+  <p class="sub">Create, Read, Update and Delete — Contacts, Companies and Deals.</p>
+
+  <!-- TOKEN -->
+  <div class="card">
+    <h2>🔑 Enter your Private App Access Token</h2>
+    <label for="token">Access Token (stays in browser memory only)</label>
+    <input type="password" id="token" placeholder="pat-na2-xxxxxxxxxxxx" />
+    <button onclick="init()">Save Token &amp; Load All</button>
+    <span id="tokenStatus" style="font-size:13px;"></span>
+  </div>
+
+  <!-- CONTACTS -->
+  <div class="card">
+    <h2>👤 Contacts</h2>
+    <button onclick="loadList('contacts')">Refresh</button>
+    <div id="list-contacts" class="muted">Save token above to load records.</div>
+
+    <hr class="divider" />
+    <h3 id="form-title-contacts">Create Contact</h3>
+    <input type="hidden" id="contacts-id" />
+    <div class="grid">
+      <div>
+        <label>First Name</label>
+        <input type="text" id="contacts-firstname" placeholder="John" />
+      </div>
+      <div>
+        <label>Last Name</label>
+        <input type="text" id="contacts-lastname" placeholder="Doe" />
+      </div>
+    </div>
+    <label>Email</label>
+    <input type="email" id="contacts-email" placeholder="john@example.com" />
+    <div>
+      <button class="secondary" onclick="saveRecord('contacts')">Save</button>
+      <button class="cancel" id="cancel-contacts" onclick="cancelEdit('contacts')" style="display:none">Cancel</button>
+    </div>
+    <div class="result" id="result-contacts"></div>
+  </div>
+
+  <!-- COMPANIES -->
+  <div class="card">
+    <h2>🏢 Companies</h2>
+    <button onclick="loadList('companies')">Refresh</button>
+    <div id="list-companies" class="muted">Save token above to load records.</div>
+
+    <hr class="divider" />
+    <h3 id="form-title-companies">Create Company</h3>
+    <input type="hidden" id="companies-id" />
+    <label>Company Name</label>
+    <input type="text" id="companies-name" placeholder="Acme Corp" />
+    <label>Domain</label>
+    <input type="text" id="companies-domain" placeholder="acme.com" />
+    <div>
+      <button class="secondary" onclick="saveRecord('companies')">Save</button>
+      <button class="cancel" id="cancel-companies" onclick="cancelEdit('companies')" style="display:none">Cancel</button>
+    </div>
+    <div class="result" id="result-companies"></div>
+  </div>
+
+  <!-- DEALS -->
+  <div class="card">
+    <h2>💰 Deals</h2>
+    <button onclick="loadList('deals')">Refresh</button>
+    <div id="list-deals" class="muted">Save token above to load records.</div>
+
+    <hr class="divider" />
+    <h3 id="form-title-deals">Create Deal</h3>
+    <input type="hidden" id="deals-id" />
+    <label>Deal Name</label>
+    <input type="text" id="deals-dealname" placeholder="Acme Contract" />
+    <label>Amount ($)</label>
+    <input type="number" id="deals-amount" placeholder="5000" />
+    <label>Deal Stage</label>
+    <select id="deals-dealstage">
+      <option disabled selected>Save token first to load stages</option>
+    </select>
+    <span id="stage-status" style="font-size:13px; display:block; margin-bottom:10px;"></span>
+    <div>
+      <button class="secondary" onclick="saveRecord('deals')">Save</button>
+      <button class="cancel" id="cancel-deals" onclick="cancelEdit('deals')" style="display:none">Cancel</button>
+    </div>
+    <div class="result" id="result-deals"></div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/crud.js"></script>
+
+</body>
+</html>
