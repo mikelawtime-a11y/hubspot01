@@ -80,18 +80,8 @@
     <div class="result" id="link-result-3"></div>
   </div>
 
-  <script src="js/config.js"></script>
   <script src="js/api.js"></script>
   <script src="js/associations.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (CONFIG.token) {
-        document.getElementById('token').value = CONFIG.token;
-        document.querySelector('.card').style.display = 'none';
-        initAssoc();
-      }
-    });
-  </script>
 
 </body>
 </html>

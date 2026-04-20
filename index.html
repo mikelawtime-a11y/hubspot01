@@ -105,19 +105,8 @@
     <div class="result" id="result-create-deal">Results will appear here...</div>
   </div>
 
-  <script src="js/config.js"></script>
   <script src="js/api.js"></script>
   <script src="js/app.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (CONFIG.token) {
-        document.getElementById('token').value = CONFIG.token;
-        saveToken();
-        loadDealStages();
-        document.querySelector('.card').style.display = 'none';
-      }
-    });
-  </script>
 
 </body>
 </html>
