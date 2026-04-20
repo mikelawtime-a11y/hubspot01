@@ -82,6 +82,14 @@
 
   <script src="js/api.js"></script>
   <script src="js/associations.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (ACCESS_TOKEN) {
+        document.querySelector('.card').style.display = 'none';
+        initAssoc();
+      }
+    });
+  </script>
 
 </body>
 </html>

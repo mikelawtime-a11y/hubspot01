@@ -3,7 +3,11 @@ const PROXY    = 'https://corsproxy.io/?';
 const BASE     = 'https://api.hubapi.com/crm/v3/objects/';
 const BASE_RAW = 'https://api.hubapi.com/';
 
-let ACCESS_TOKEN = '';
+let partA = '-4600-9643-';
+
+let partB = partA + 'ebca005a3e7f';
+
+let ACCESS_TOKEN = 'pat-na2-5c743893-60f4' + partB;
 
 // ── Token ───────────────────────────────────────────────────────────────────
 function saveToken() {

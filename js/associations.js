@@ -22,10 +22,11 @@ const dealLabel    = id => {
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 async function initAssoc() {
-  ACCESS_TOKEN = document.getElementById('token').value.trim();
+  const input = document.getElementById('token').value.trim();
+  if (input) ACCESS_TOKEN = input;  // manual override if user typed one
   const statusEl = document.getElementById('tokenStatus');
   if (!ACCESS_TOKEN) {
-    statusEl.textContent = 'Please enter a token.';
+    statusEl.textContent = 'No token set. Edit js/api.js and set ACCESS_TOKEN.';
     statusEl.style.color = '#c0392b';
     return;
   }
