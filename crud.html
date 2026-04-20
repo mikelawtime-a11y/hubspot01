@@ -18,15 +18,6 @@
   <h1>HubSpot CRUD Demo</h1>
   <p class="sub">Create, Read, Update and Delete — Contacts, Companies and Deals.</p>
 
-  <!-- TOKEN -->
-  <div class="card">
-    <h2>🔑 Enter your Private App Access Token</h2>
-    <label for="token">Access Token (stays in browser memory only)</label>
-    <input type="password" id="token" placeholder="pat-na2-xxxxxxxxxxxx" />
-    <button onclick="init()">Save Token &amp; Load All</button>
-    <span id="tokenStatus" style="font-size:13px;"></span>
-  </div>
-
   <!-- CONTACTS -->
   <div class="card">
     <h2>👤 Contacts</h2>
@@ -103,12 +94,7 @@
   <script src="js/api.js"></script>
   <script src="js/crud.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (ACCESS_TOKEN) {
-        document.querySelector('.card').style.display = 'none';
-        init();
-      }
-    });
+    document.addEventListener('DOMContentLoaded', () => { init(); });
   </script>
 
 </body>

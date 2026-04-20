@@ -18,15 +18,6 @@
   <h1>Relationships View</h1>
   <p class="sub">See how Companies, Contacts and Deals connect — and create new links.</p>
 
-  <!-- TOKEN -->
-  <div class="card">
-    <h2>🔑 Enter your Private App Access Token</h2>
-    <label for="token">Access Token (stays in browser memory only)</label>
-    <input type="password" id="token" placeholder="pat-na2-xxxxxxxxxxxx" />
-    <button onclick="initAssoc()">Load Relationships</button>
-    <span id="tokenStatus" style="font-size:13px; margin-left:8px;"></span>
-  </div>
-
   <!-- TREE VIEW -->
   <div class="card">
     <h2>🗂 Relationship Tree</h2>
@@ -83,12 +74,7 @@
   <script src="js/api.js"></script>
   <script src="js/associations.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (ACCESS_TOKEN) {
-        document.querySelector('.card').style.display = 'none';
-        initAssoc();
-      }
-    });
+    document.addEventListener('DOMContentLoaded', () => { initAssoc(); });
   </script>
 
 </body>

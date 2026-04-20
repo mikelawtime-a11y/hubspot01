@@ -9,14 +9,10 @@ const SCHEMA = {
 const CACHE = { contacts: {}, companies: {}, deals: {} };
 let dealStageMap = {}; // { stageId → label }
 
-// ── Init: load all data (uses ACCESS_TOKEN already set in api.js) ───────────
+// ── Init: load all data (uses ACCESS_TOKEN set in api.js) ──────────────────
 async function init() {
-  const input = document.getElementById('token').value.trim();
-  if (input) ACCESS_TOKEN = input;  // manual override if user typed one
-  const statusEl = document.getElementById('tokenStatus');
   if (!ACCESS_TOKEN) {
-    statusEl.textContent = 'No token set. Edit js/api.js and set ACCESS_TOKEN.';
-    statusEl.style.color = '#c0392b';
+    console.error('No ACCESS_TOKEN set in js/api.js');
     return;
   }
   statusEl.textContent = '✓ Saved';
